@@ -1,0 +1,30 @@
+org: bentburton
+app: global-entry-appointment-monitor
+service: handlers-users
+
+frameworkVersion: '2'
+variablesResolutionMode: 20210326
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  lambdaHashingVersion: '20201221'
+  environment:
+    API_URL: https://ttp.cbp.dhs.gov/schedulerapi/slots?orderBy=soonest&limit=3&locationId=5180&minimum=1
+    APPOINTMENT_THRESHOLD: <date> # ex: Dec 02 2021
+    TWILIO_ACCOUNT_SID: <account sid>
+    TWILIO_AUTH_TOKEN: <auth token>
+    TWILIO_PHONE_NUMBER: '<phone number>' # ex: +14320000000
+    MY_PHONE_NUMBER: '<phone number>' # ex: +14320000000
+
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+functions:
+  rateHandler:
+    handler: src/handler.run
+    events:
+      - schedule: rate(1 minute)
