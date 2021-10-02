@@ -51,7 +51,7 @@ const checkShouldSendText = (client: Twilio, latestAppointmentTime: Date) => {
     const latestMessage = messages[0];
     const previousAppointmentDate = parsePreviousBody(latestMessage.body);
 
-    return previousAppointmentDate > latestAppointmentTime;
+    return previousAppointmentDate === latestAppointmentTime;
   });
 };
 
