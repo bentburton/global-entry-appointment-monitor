@@ -87,6 +87,9 @@ export const run = async () => {
   const latestAppointment = appointments[0];
   const latestAppointmentTime = new Date(latestAppointment.startTimestamp);
 
+  console.log('appointment threshold: ', currentAppointmentTime);
+  console.log('latest appointment time', latestAppointmentTime);
+
   if (latestAppointmentTime < currentAppointmentTime) {
     console.log('theres a new appointment');
 
