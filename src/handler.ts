@@ -48,10 +48,10 @@ const parsePreviousBody = (body: string): Date => {
 
 const checkShouldSendText = (client: Twilio, latestAppointmentTime: Date) => {
   return client.messages.list({ limit: 20 }).then(messages => {
-    const latestMessage = messages[0];
+    const latestMessage = messages.sort((a, b) => b.dateSent.getTime() - a.dateSent.getTime())[0];
     const previousAppointmentDate = parsePreviousBody(latestMessage.body);
 
-    return previousAppointmentDate !== latestAppointmentTime;
+    return previousAppointmentDate.getTime() !== latestAppointmentTime.getTime();
   });
 };
 
